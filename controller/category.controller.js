@@ -36,7 +36,7 @@ const readCatByName =  async  (req, res) => {
     } else {
         const result = await showCat();
         // res.json({ message: 'No specific resource selected, all will be displayed.', resourceList: resourceList });
-        res.json({ message: 'No specific resource selected, all will be displayed.', resourceList: result  });
+        res.json({ message: 'No specific resource selected, all will be displayed.', resourceList: await showCat()  });
     }
 };
 
@@ -90,7 +90,8 @@ const showCat = async (req, res)=>{
 
     const result = await Category.findOne({ name: 'keller' }).exec();
     console.log(result);
-    res.json(await result.populate('things'));
+    // res.json(await result.populate('things')); when showCat called as endpoint
+    return await result.populate('things');
 }
 module.exports = {mwForCategory, addCategory, readCatById, readCatByName, deleteCategoryById,
     createThingCategory, showCat

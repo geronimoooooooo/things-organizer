@@ -28,8 +28,8 @@ app.get('/add-category', categoryController.createThingCategory);
 app.get('/id/:id', categoryController.readCatById);
 
 // GET method to handle /category and read query "name" /category?name=abc
-// app.get('/', categoryController.readCatByName);
-app.get('/', categoryController.showCat);
+app.get('/', categoryController.readCatByName);
+// app.get('/', categoryController.showCat);
 //#endregion READ
 
 //#region DELETE
