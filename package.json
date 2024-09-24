@@ -1,0 +1,12 @@
+{
+  "name": "things-organizer",
+  "version": "1.0.0",
+  "description": "Helps you organize things.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
