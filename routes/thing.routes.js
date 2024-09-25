@@ -1,4 +1,5 @@
 const express = require('express');
+const thingController = require('../controller/thing.controller')
 const app = express.Router();
 
 let resourceList = [{ id: 1, name: 'Bohrer' }, { id: 2, name: 'Comics X-Men' }];
@@ -6,10 +7,7 @@ let resourceList = [{ id: 1, name: 'Bohrer' }, { id: 2, name: 'Comics X-Men' }];
 // CRUD
 
 //read all
-app.get('/', (req, res, next) => {
-    console.log('Middleware for /things');
-    next();
-});
+app.get('/', thingController.mwForThing);
 
 //read specific /category/id/1
 app.get('/id/:id', (req, res) => {
@@ -33,5 +31,7 @@ app.get('/', (req, res) => {
         res.send('No Thing name provided. All will be displayed.');
     }
 });
+
+app.get('/:id', thingController.readThingById);
 
 module.exports = app;

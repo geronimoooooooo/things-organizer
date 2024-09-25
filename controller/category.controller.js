@@ -28,33 +28,75 @@ const readCatById = (req, res) => {
     }
 };
 
+const readCategoryById = async (req, res) => {
+    try {
+      const category = await Category.findById(req.params.id);  // Find category by ID
+      if (!category) {
+        return res.status(404).json({ message: 'Category not found' }); // Return 404 if not found
+      }
+      res.json(category);  // Return the Mongoose object as JSON
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });  // Handle errors
+    }
+  };
+
 const readCatByName =  async  (req, res) => {
     const name = req.query.name; // Access the query parameter "name"
 
     if (name) {
         res.send(`Category name: ${name}`);
     } else {
-        const result = await showCat();
+        
         // res.json({ message: 'No specific resource selected, all will be displayed.', resourceList: resourceList });
-        res.json({ message: 'No specific resource selected, all will be displayed.', resourceList: await showCat()  });
+        res.json({ message: 'No specific resource selected, all will be displayed.', resourceList: await readAllCategories()  });
     }
 };
 
-const deleteCategoryById =  (req, res) => {
+const readCategoryByName = async (req, res) => {
+    const {name} = req.query;
+    try {       
+      const category = await Category.findOne({ name: name}).populate('things');
+      if (!category) {
+        return res.status(404).json({ message: 'Category not found' }); // Return 404 if not found
+      }
+      res.json(category);  // Return the Mongoose object as JSON
+    } catch (error) {
+      res.status(500).json({ message: 'No specific resource selected, all will be displayed.', resourceList: await readAllCategories() });  // Handle errors
+    }
+  };
+
+const deleteCatById =  (req, res) => {
     const resourceId = parseInt(req.params.id);
     resourceList = resourceList.filter((r) => r.id !== resourceId);
     res.json({ message: 'Resource deleted successfully', resourceList: resourceList });
    };
 
-   async function createThingCategory() {
-    const category = await Category.create({id: 11, name: 'keller'});
-    const thing = await Thing.create({id: 1, name: 'maschine', category: category._id});
-    category.things.push(thing);
-    await category.save();
-    console.log(category);
+async function deleteCategoryById(req, res){
+    try {
+        const category = await Category.findByIdAndDelete(req.params.id);
+        if(!category){
+            return res.status(404).json({msg: `Could not delete ${req.params.id}`});
+        }
+        res.status(200).json(category);
+    } catch (error) {
+        res.status(500).json({msg: `Could not delete ${req.params.id}`});
+    }
+}
+
+async function createThingCategory(req, res) {
+    try {        
+        const category = await Category.create({id: 33, name: 'Garage'});
+        const thing = await Thing.create({id: 1, name: 'CDs', category: category._id});
+        category.things.push(thing);
+        await category.save();
+        console.log(category);
+        return res.status(201).json(category);
+    } catch (error) {
+        res.status(500).json({msg: 'Could not create!'});
+    }
   }
 
-  async function addThingToCategory(catId) {
+async function addThingToCategory(catId) {
     let category;
     try {
       category = await Category.findById(catId);
@@ -79,20 +121,19 @@ const deleteCategoryById =  (req, res) => {
     // console.dir(user, { depth: null })
   }
   
-  async function getCategoryIdByName(catName) {
+async function getCategoryIdByName(catName) {
     const category = await Category.findOne({ name: catName });
     return category._id;
   }
 
-const showCat = async (req, res)=>{    
-    // const result = await addThingToCategory(await getCategoryIdByName('keller'));
-    // console.log("aaaaa: "+result);
-
-    const result = await Category.findOne({ name: 'keller' }).exec();
-    console.log(result);
-    // res.json(await result.populate('things')); when showCat called as endpoint
-    return await result.populate('things');
+async function readAllCategories (req, res){   
+    const result = await Category.find().populate('things').exec();  
+    return result;
 }
-module.exports = {mwForCategory, addCategory, readCatById, readCatByName, deleteCategoryById,
-    createThingCategory, showCat
+
+module.exports = {
+    mwForCategory, 
+    addCategory, createThingCategory, 
+    readAllCategories, readCategoryByName, readCategoryById, readCatById, readCatByName, 
+    deleteCategoryById, deleteCatById,    
 };

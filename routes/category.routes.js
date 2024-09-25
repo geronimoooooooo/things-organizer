@@ -26,6 +26,7 @@ app.get('/add-category', categoryController.createThingCategory);
 //#region READ
 //read specific /category/id/1
 app.get('/id/:id', categoryController.readCatById);
+app.get('/:id', categoryController.readCategoryById);
 
 // GET method to handle /category and read query "name" /category?name=abc
 app.get('/', categoryController.readCatByName);
@@ -35,6 +36,7 @@ app.get('/', categoryController.readCatByName);
 //#region DELETE
 // Delete a resource by ID http://localhost:3000/api/resources/:id
 app.get('/delete/:id', categoryController.deleteCategoryById);
+// app.get('/delete/:id', categoryController.deleteCatById);
 //#endregion DELETE
 //#endregion CRUD
 
