@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const path = require('path')
@@ -18,6 +18,7 @@ const locationRoutes = require('./routes/location.routes');
 const organizationRoutes = require('./routes/organization.routes');
 const thingRoutes = require('./routes/thing.routes');
 const userRoutes = require('./routes/user.routes');
+const deleteContentFromCollections = require('./models/deleteModels')
 // const User = require('./models/User');
 const app = express()
 // npm i express fs path https mongoose passport passport-local passport-local-mongoose 
@@ -67,6 +68,8 @@ app.use('/thing', thingRoutes);
 app.get('/', (req, res) => {        
     res.send('Hello, World! date: ' + new Date());
 });
+
+app.get('/delete', deleteContentFromCollections.deleteContentFromCollections);
 //#region WEBSERVER
 //set NODE_OPTIONS=--openssl-legacy-provider in cmd in VS;read magic wiki
 if (host == 'vm04') {
@@ -82,7 +85,7 @@ if (host == 'vm04') {
       console.log(new Date().toISOString() + ` https server could not start on ${host} port: ${portHTTPS}`);
     } else {
       console.log(new Date().toISOString() + ` https server running on ${host} port: ${portHTTPS}`);
-      console.log(new Date().toISOString() + ` call: https:vm04`);
+      console.log(new Date().toISOString() + ` call: https:vm04 or https://localhost/`);
     }
   });
 } else {

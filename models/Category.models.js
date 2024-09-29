@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Thing = require('./Thing.models.js');
+const Location = require('./Location.models.js');
 
 
 const CategorySchema = new mongoose.Schema({
@@ -9,10 +10,8 @@ const CategorySchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  things: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Thing"
- }]
+  things: [{  type: mongoose.Schema.Types.ObjectId,  ref: "Thing" }],
+  location: [{  type: mongoose.Schema.Types.ObjectId,  ref: "Location" }]
  
 });
 

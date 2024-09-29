@@ -25,11 +25,10 @@ app.get('/add-category', categoryController.createThingCategory);
 
 //#region READ
 //read specific /category/id/1
-app.get('/id/:id', categoryController.readCatById);
 app.get('/:id', categoryController.readCategoryById);
 
 // GET method to handle /category and read query "name" /category?name=abc
-app.get('/', categoryController.readCatByName);
+app.get('/', categoryController.readCategoryByName);
 // app.get('/', categoryController.showCat);
 //#endregion READ
 

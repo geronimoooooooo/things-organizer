@@ -9,29 +9,13 @@ let resourceList = [{ id: 1, name: 'Bohrer' }, { id: 2, name: 'Comics X-Men' }];
 //read all
 app.get('/', thingController.mwForThing);
 
-//read specific /category/id/1
-app.get('/id/:id', (req, res) => {
-    const resourceId = parseInt(req.params.id);
-    const resource = resourceList.find((r) => r.id === resourceId);
-
-    if (resource) {
-        res.json(resource);
-    } else {
-        res.status(404).json({ error: 'Resource not found' });
-    }
-});
 
 // GET method to handle /category and read query "name" /category?name=abc
-app.get('/', (req, res) => {
-    const name = req.query.name; // Access the query parameter "name"
+app.get('/', thingController.readThingByName);
+app.get('/all', thingController.readAllThings);
+app.get('/add', thingController.addThing);
 
-    if (name) {
-        res.send(`Thing name: ${name}`);
-    } else {
-        res.send('No Thing name provided. All will be displayed.');
-    }
-});
-
-app.get('/:id', thingController.readThingById);
+app.get('/delete',thingController.deleteThingByName);
+app.get('/:id', thingController.readThingById); //must be last endpoint
 
 module.exports = app;
