@@ -7,12 +7,8 @@ const {categoryList} = require('../util/resourceLists')
 const resourceList = categoryList;
 // let resourceList = [{ id: 1, name: 'tools' }, { id: 2, name: 'books' }];
 
-
-
 //read all
 app.get('/', categoryController.mwForCategory);
-
-
 //#region CRUD
 
 //#region CREATE POST

@@ -7,7 +7,8 @@ let resourceList = [{ id: 1, name: 'Bohrer' }, { id: 2, name: 'Comics X-Men' }];
 // CRUD
 
 //read all
-app.get('/', thingController.mwForThing);
+// app.get('/', thingController.mwForThing);
+app.use(thingController.mwForThing); //executed everytime url starts with /thing
 
 
 // GET method to handle /category and read query "name" /category?name=abc

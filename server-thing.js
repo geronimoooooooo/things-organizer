@@ -18,6 +18,7 @@ const locationRoutes = require('./routes/location.routes');
 const organizationRoutes = require('./routes/organization.routes');
 const thingRoutes = require('./routes/thing.routes');
 const userRoutes = require('./routes/user.routes');
+const authRoutes = require('./routes/auth.routes');
 const deleteContentFromCollections = require('./models/deleteModels')
 // const User = require('./models/User');
 const app = express()
@@ -63,6 +64,7 @@ app.use('/category', categoryRoutes);
 app.use('/location', locationRoutes);
 app.use('/organization', organizationRoutes);
 app.use('/thing', thingRoutes);
+app.use('/auth', authRoutes);
 
 
 app.get('/', (req, res) => {        

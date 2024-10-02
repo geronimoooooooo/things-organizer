@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const deleteContentFromCollections = async (req, res) => {
     // List of collection names you want to drop
-    const collectionsToDrop = ['categories', 'locations', 'things', 'organizations'];
+    const collectionsToDrop = ['articles', 'categories', 'locations', 'things', 'organizations'];
     try {
       for (const collectionName of collectionsToDrop) {
         if (mongoose.connection.collections[collectionName]) {
